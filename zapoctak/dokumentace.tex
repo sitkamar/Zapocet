@@ -1,0 +1,202 @@
+\documentclass[a4paper,12pt]{report}
+\addtolength{\topmargin}{-1.1in}
+\setlength\textheight{265mm}
+\setlength\textwidth{165mm}
+\setlength\oddsidemargin{-2mm}
+\setlength\evensidemargin{-2mm}
+\usepackage[czech]{babel}
+\usepackage[a-2u]{pdfx}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{lmodern,textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{xcolor,colortbl}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\graphicspath{ {../images/} }
+\def\columnseprulecolor{\color{black}}
+\setlength{\columnseprule}{0.3pt}
+
+\def\NazevPrace{Hra Snake pro dva hráče}
+\def\AutorPrace{Martin Šitina}
+\def\Vedouci{Mgr. Klára Pešková, Ph.D.}
+\def\NazevSkoly{Univerzita Karlova - Matematicko-fyzikální fakulta}
+\setlength{\parindent}{0pt}
+\def\doubleunderline#1{\underline{\underline{#1}}}\makeatletter
+\def\@makechapterhead#1{
+	{\parindent \z@ \raggedright \normalfont
+	\huge\bfseries \thechapter. #1
+	\par\nobreak
+	\vskip 20\p@
+}}
+\def\@makeschapterhead#1{
+	{\parindent \z@ \raggedright \normalfont
+	\huge\bfseries #1
+	\par\nobreak
+	\vskip 20\p@
+}}
+\makeatother
+
+\renewcommand{\chaptermark}[1]{%
+\markboth{#1}{}}
+
+\fancypagestyle{toc}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\fancyhead[C]{}
+	\fancyhead[L]{\textbf{\NazevPrace}}
+	\fancyfoot[L]{\AutorPrace}
+	\fancyfoot[C]{}
+	\fancyfoot[R]{\thepage}
+}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\fancyhead[C]{}
+	\fancyhead[L]{\textbf{\NazevPrace\space -- \thechapter. \leftmark}}
+	\fancyfoot[L]{\AutorPrace}
+	\fancyfoot[C]{}
+	\fancyfoot[R]{\thepage}
+}
+
+
+\begin{document}
+\pagenumbering{arabic}
+\pagestyle{empty}
+\hypersetup{pageanchor=false}
+
+\begin{center}
+
+{\LARGE\bfseries\NazevSkoly}
+
+\vspace{-18mm}
+\vfill
+
+\vfill
+
+
+\vspace{-8mm}
+\vfill
+
+{\bf\Large ZÁPOČTOVÝ PROGRAM}
+
+\vfill
+
+
+\vspace{15mm}
+
+{\LARGE\bfseries\NazevPrace}
+
+
+\vfill
+
+
+Vypracoval: \hfill \AutorPrace
+
+Vedoucí práce: \hfill \Vedouci
+
+\vspace{15mm}
+
+\end{center}
+
+
+
+\newpage
+\hypersetup{pageanchor=true}
+\pagestyle{plain}
+\pagenumbering{roman}
+
+
+
+
+
+
+\vbox to 0.20\vsize{
+\setlength\parindent{0mm}
+\setlength\parskip{5mm}
+
+\textbf{Název práce:}
+\NazevPrace
+
+\textbf{Autor:}
+\AutorPrace
+
+\textbf{Abstrakt:}
+Zadáním je napsat program, který bude umožňovat hraní známé hry snake pro dva hráče na jednom zařízení. Další možností hry by poté měla být i možnost hrát proti počítači. Samotná hra snake je o tom, že hráč ovládá hada a snaží se sníst ovoce a nenarazit, přičemž každým snězením se had zvětší.\\
+
+
+
+\vss}
+
+\newpage
+
+\addtocontents{toc}{\protect\thispagestyle{toc}}
+\pagestyle{toc}
+\tableofcontents
+\cleardoublepage
+\pagestyle{plain}
+\pagenumbering{arabic}
+\chapter{Úvod}
+Zadáním práce je napsat program, který bude umožňovat hraní hry snake a to nejen pro jednoho a dva hráče, ale i pro jednoho hráče proti počítači. Hra snake je velmi známá počítačová hra, kde hráč ovládá hada na čtverečkovaném. Had se konstantně pohybuje, kdy hráč může měnit směr pohybu. Cílem je poté sbírat jídlo, které se náhodně generuje na ploše. Po každém snězení jídla se had vždy o jedno políčko zvětší. Hráč se také ovšem nesmí vybourat. Tedy nesmí nabourat, jak sám do sebe tak ani do kraje hry nebo do jedu, který se stejně jako jídlo náhodně generuje. V případě více hráčů také samozřejmě nesmí nabourat do protihráče. Pokud ovšem se hráč vybourá ztrácí celou délku co nasbíral a začíná znovu.\\
+Program by měl také podporovat hraní proti počítači. Kde had ovládaný počítačem by se měl snažit co nejlépe dojet k jídlu a nevybourat se.\\
+Celé grafické řešení programu bude řešeno pomocí modulu turtle a jeho funkcí, stejně tak poté i ovládání hadů hráčem.
+\chapter{Program}
+Program se skládá ze tří tříd a hlavní metody. První třída je pouze třída vector, která představuje jedno políčko na hrací ploše. Také samozřejmě představuje i směr, kterým se hadi pohybují. Má tedy naimplementované sčítání a odčítání k posouvání hada.\\
+Druhá třída se jménem snake, reprezentuje jednotlivé hady ve hře. Pamatuje si jak jednotlivé políčka svého těla, tak i směr, kterým se pohybuje. Také je u každého hada udržováno aktuální a nejvyšší skóre. Třída také zařizuje všechny možnosti hada. Tedy pohyb, zvětšení a resetování. Nakonec také zařizuje všechno okolo vykreslování hada. Had se po každé jeho změně překreslí a také se vykreslí tabulka s jeho skóre pokud se změnila.\\
+Nakonec je tu samotná třída hry (game). Tato třída řeší celou logiku hry, mezi něž patří srážky a jesení. Generuje také nové jídlo a jedy a to na náhodná pozice hry. Každý jeden cyklus hry se zavolá každých 100 milisekund a má jméno move().\\
+Ovládání hadů je řešeno pomocí Turtle.onkey() metody v hlavní metodě, která po stisknutí příslušné klávesy zavolá funkci na změnění směru daného hada. 
+\section{Hra}
+Samotná hra je tedy řešena pomocí třídy game. Na začátku se ovšem hra zeptá, co za mód chce hráč hrát. Je na výběr ze tří možností buď hrát sám, nebo s kamarádem a nakonec možnost hraní proti počítači.\\
+Po vybrání módu se vytvoří hadi a vygeneruje se první jídlo. Poté se ještě vygeneruje 10 jedů, aby hra nebyla tak jednoduchá. Nakonec se spustí funkce move(). Pokud je hra nastavena na hru jednoho hráče tak pouze kontroluje, zda had nevyjel mimo hrací plochu nebo nenarazil do jedu. Pokud ano vyresetuje hada a hráč hraje znovu od 0. Také kontroluje snězení jídla, které pokud nastane tak vygeneruje nové jídlo, zvětší hada a vygeneruje také nový jed.\\
+V módu pro dva hráče to funguje velmi podobně jen se ještě musí kontrolovat srážka s druhým hadem a nesledovat jen jednoho hada, ale dva.\\
+Nakonec je tu ještě mód proti AI, který je úplně stejný, jako hra pro dva hráče jen s tím rozdíle, že se ještě volá metoda na ovládání druhého hada.
+\section{AI}
+Počítačově ovládaný had je tedy jak už název napovídá ovládán programem. Tento program si nejdříve zjistí jakým směrem může jet. Poté se podívá, kde je jídlo. Pokud to má had k jídlu dál po x ose pokusí se nejdřív vydat směrem k jídlu po ní. Pokud to nejde zkusí to po ose y. Pokud se had nemůže přiblížit k jídlu vydá se nejdřív opačným směrem po ose, na které jé blíž a nakonec na které je dál.\\
+Tento program není neporazitelný může buď vjet do slepé uličky, kvůli tomu že se nedívá dále než jeden krok. Druhou možností jak může prohrát je poté sebevražda protihráče proti, které nemůže nic dělat.\\
+Druhý problém není v podstatě řešitelný, protože hráč vždy může mít příležitost narazit hlavou na hlavu. První případ by ovšem byl řešitelný rekurzivním hledáním optimální trasy. Zde je ovšem několik problémů. Za prvé by se musel provádět po každém tahu, protože se vždy pohne i protihráč a změní rozvržení plochy. Tento problém by znamenal, že by hra běžela o dost pomaleji než je zamýšleno. Druhý problém je, že k jídlu nemusí vést žádná cesta a potom by program musel spočítat celé pole pokaždé, což by zaseklo celou hru.
+\chapter{Pro uživatele}
+Při spuštění programu se na obrazovce objeví hlavní menu, kde si hráč může vybrat pomocí čísel jeden ze tří módů. Prvním je hra jednoho hráče, druhým je hra pro dva hráče a nakonec třetím je hra proti počítači. Po zmáčknutí jednoho z těchto čísel se již spustí samotná hra.
+\section{Ovládání hry}
+První hráč hada ovládá šipkami. Tedy když zmáčkne šipku nahoru změní se směr hada nahoru. Druhý hráč potom ovládá svého hada pomocí kláves WSAD, kde W -- nahoru, S -- dolů, A -- vlevo, D -- vpravo.\\
+Pokud se hráč pokouší změnit směr na opačný směr než, kterým jede nic se neprovede a to samé samozřejmě platí pro případ, když se hráč pokouší změnit směr na stejný.
+\section{Průběh a cíl hry}
+Cílem hry je sníst co nejvíce jídla, které je vyznačeno zeleným čtverečkem, a to bez naražení do jedu, zdi nebo protihráče. Jed je vyznačen fialovými čtverečky a zeď černou barvou po okraji hrací plochy. Každým sebráním jídla se had zvětší a zvýší se i skóre daného hráče. Hru je možné hrát do nekonečna, kdy po každém naražení se hráči vyresetuje skóre, ale udržuje se jeho nejvyšší dosáhnuté skóre. Tedy když se hráči rozhodnou skončit ten kdo má nejvyšší highscore vyhrává.
+\chapter{Možná vylepšení}
+V této části se podíváme na možná vylepšení, která by se do hry dala přidat.
+\section{Možnost více hráčů}
+Prvním vylepšením je možnost více hráčů, kdy by hru nemuseli hrát maximálně 2 hráči, ale například až 4. K zavedení tohoto řešení by bylo potřeba jen přidat hře více hadů a přidat kontrolu srážky všech hadů mezi sebou jinak je již vše vyřešeno. Samozřejmě by také bylo potřeba najít místo, kde by zbylí hráči mohli hrát.\\
+Také by bylo zajímavé přidat k možnost nastavit jakéhokoliv hada, aby byl ovládán počítačem. Zajímavý by byl potom například souboj dvou počítačů.
+\section{Přidání dalších módů}
+Zatím jediné co módy ovlivňují je kolik hraje hráčů, ale bylo by možné vymyslet typy hry, kde by například nebylo žádné jídlo a hadi by se automaticky zvětšovali po nějaké době a kdo vydrží déle.\\
+Nebo například možnost, kdy se hadi při vyjetí z hracího pole objeví na druhé straně místo toho aby zemřeli. Také je možný například mód, kdy ovládání jsou jen možnosti doleva a doprava a to z pohledu hada. Poté je hra zajímavější, protože když had jede dolů člověk si musí uvědomit, že ovládání je vlastně obráceně.\\
+\section{Více druhů AI}
+Dalším nápadem je vytvořit více možností, jak má počítač hada ovládat.\\
+Mohl by ho například ovládat úplně náhodně, což se spojením s tím že by hráli dva počítače proti sobě zní zajímavě.\\
+Nebo by mohl jet čistě nejkratší cestou za jídlem bez ohledu na to co je okolo něj. Poté by i člověk měl proti počítači šanci.\\
+Nejhezčí by ovšem asi byla už zmíněná neporazitelná verze, která by počítala nejkratší cestu k jídlu, ale jak už bylo zmíněno musela by se nějak velmi zefektivnit. Jedním možným zefektivněním by mohlo být že had například počítá jen s hloubkou 5 a poté vyhodnotí, kde se dostal nejblíže k jídlu.
+\chapter{Závěr}
+Kdybych znovu dělal tuto práci lépe bych si rozvrhl zadané AI, které jsem nejdříve zkoušel hledáním nejkratší cesty k jídlu, ale musel jsem ji zavrhnout, protože se poté celá hra sekala. Jinak jsem ovšem se svojí spokojen a myslím si, že se mi povedlo splnit zadání.
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
